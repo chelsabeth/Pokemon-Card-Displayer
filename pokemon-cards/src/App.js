@@ -1,42 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import axios from "axios";
+// import PokemonCard from "./components/PokemonCard";
 
-function App() {
-  const [pokemon, setPokemon] = useState([]);
+class App extends React.Component {
+  state = {
+    pokemon: [],
+    pokePic: []
+  };
 
-  useEffect(() => {
+  fetchPokemon = () => {
     axios
       .get("https://pokeapi.co/api/v2/pokemon/")
       .then(res => {
-        const pokemon = res.data.results;
-        console.log("Pokemon Data: ", pokemon);
-        setPokemon(pokemon);
+        this.setState({
+          pokemon: res.data
+        });
+        console.log("Pokemon Data: ", this.state.pokemon);
       })
-      .catch(err => {
-        console.log("An error has occured", err);
-      });
-  }, []);
+      .catch(err => console.log("An error has occured", err));
+  }
 
-  return (
-    <div className="App">
-      <h1>Gotta Catch em' All</h1>
-      <div className="card-container">
-        {pokemon.map((pokemon, index) => {
-          return (
-            <div>
-              <h2>{pokemon.name}</h2>
-              <img
-                className="poke-pic"
-                src={pokemon.url}
-                alt="picture of pokemon"
-              ></img>
-            </div>
-          );
-        })}
+  componentDidMount() {
+    this.fetchPokemon()
+
+    axios
+    .get(this.state.pokemon.results)
+    .then(res => {
+      this.setState({
+        pokePic: res.data.results.url
+      });
+      console.log("My pokemon picture data: ", this.state.pokePic)
+    })
+    .catch(err => console.log("Can't fetch pokemon pictures", err));
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Gotta Catch Em' All!</h1>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
