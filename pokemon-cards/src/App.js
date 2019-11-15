@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to my Pokemon App!</h1>
+      <h1>Gotta Catch em' All</h1>
     </div>
   );
 }
