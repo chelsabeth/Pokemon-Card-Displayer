@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import axios from "axios";
+import PokemonCard from "./components/PokemonCard";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    pokemon: [],
+    pokePic: []
+  };
+
+  fetchPokemon = () => {
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon/")
+      .then(res => {
+        this.setState({
+          pokemon: res.data.results
+        });
+        console.log("Pokemon Data: ", this.state.pokemon);
+      })
+      .catch(err => console.log("An error has occured", err));
+  }
+
+  componentDidMount() {
+    this.fetchPokemon()
+
+  //   axios
+  //   .get("")
+  //   .then(res => {
+  //     this.setState({
+  //       pokePic: res.data.results.url
+  //     });
+  //     console.log("My pokemon picture data: ", this.state.pokePic)
+  //   })
+  //   .catch(err => console.log("Can't fetch pokemon pictures", err));
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Gotta Catch Em' All!</h1>
+        <PokemonCard data={this.state.pokemon}/>
+      </div>
+    );
+  }
 }
 
 export default App;
