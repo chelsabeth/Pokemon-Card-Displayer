@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
-// import PokemonCard from "./components/PokemonCard";
+import PokemonCard from "./components/PokemonCard";
 
 class App extends React.Component {
   state = {
@@ -14,7 +14,7 @@ class App extends React.Component {
       .get("https://pokeapi.co/api/v2/pokemon/")
       .then(res => {
         this.setState({
-          pokemon: res.data
+          pokemon: res.data.results
         });
         console.log("Pokemon Data: ", this.state.pokemon);
       })
@@ -24,15 +24,15 @@ class App extends React.Component {
   componentDidMount() {
     this.fetchPokemon()
 
-    axios
-    .get(this.state.pokemon.results)
-    .then(res => {
-      this.setState({
-        pokePic: res.data.results.url
-      });
-      console.log("My pokemon picture data: ", this.state.pokePic)
-    })
-    .catch(err => console.log("Can't fetch pokemon pictures", err));
+  //   axios
+  //   .get("")
+  //   .then(res => {
+  //     this.setState({
+  //       pokePic: res.data.results.url
+  //     });
+  //     console.log("My pokemon picture data: ", this.state.pokePic)
+  //   })
+  //   .catch(err => console.log("Can't fetch pokemon pictures", err));
   }
 
 
@@ -40,6 +40,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Gotta Catch Em' All!</h1>
+        <PokemonCard data={this.state.pokemon}/>
       </div>
     );
   }
