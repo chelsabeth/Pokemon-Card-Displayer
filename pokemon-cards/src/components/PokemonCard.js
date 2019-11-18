@@ -9,8 +9,8 @@ function PokemonCard(props) {
         <div className="card-container">
             {props.data.map(data => (
                 <div key={data.id} className="poke-card">
-                <img classname="poke-pic" src={data.url} alt="picture of pokemon"></img>
                 <h2>{data.name}</h2>
+                <img classname="poke-pic" src={data.url} alt="picture of pokemon"></img>
                 </div>
             ))}
         </div>
