@@ -11,10 +11,10 @@ class App extends React.Component {
 
   fetchPokemon = () => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon/")
+      .get("https://pokeapi.co/api/v2/pokemon/1/")
       .then(res => {
         this.setState({
-          pokemon: res.data.results
+          pokemon: res.data
         });
         console.log("Pokemon Data: ", this.state.pokemon);
       })
@@ -39,7 +39,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Gotta Catch Em' All!</h1>
+        <h1 className="App-title">Gotta Catch Em' All!</h1>
         <PokemonCard data={this.state.pokemon}/>
       </div>
     );
